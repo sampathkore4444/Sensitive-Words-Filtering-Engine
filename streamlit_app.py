@@ -1,3 +1,240 @@
+/*
+import streamlit as st
+import pandas as pd
+import re
+import ollama
+
+# ------------------------------------
+# CONFIG
+# ------------------------------------
+
+OLLAMA_MODEL = "qwen2.5:0.5b"
+
+DEFAULT_WORDS = [
+    # sexual content
+    "sex",
+    "anal",
+    "porn",
+    "nude",
+    "naked",
+    "erotic",
+    "blowjob",
+    "handjob",
+    "orgasm",
+    "cum",
+    "cumming",
+    "dick",
+    "cock",
+    "pussy",
+    "vagina",
+    "penis",
+    "boobs",
+    "breasts",
+    "nipples",
+    "butt",
+    "ass",
+    "butthole",
+    # strong profanity
+    "fuck",
+    "fucking",
+    "fucked",
+    "fucker",
+    "shit",
+    "shitty",
+    "bullshit",
+    "bitch",
+    "bitches",
+    "bastard",
+    "damn",
+    "dammit",
+    # insults
+    "asshole",
+    "dumbass",
+    "jackass",
+    "moron",
+    "idiot",
+    "stupid",
+    "loser",
+    "scumbag",
+    # harassment / vulgar slang
+    "slut",
+    "whore",
+    "hoe",
+    "douche",
+    "douchebag",
+    "crap",
+    "prick",
+    # sexual verbs/slang
+    "suck",
+    "lick",
+    "hump",
+    "jerk",
+    "jerking",
+    "screw",
+    # body-related vulgar slang
+    "tits",
+    "titty",
+    "boobies",
+    "balls",
+    "testicles",
+    # offensive intensifiers
+    "motherfucker",
+    "mf",
+    "mfucker",
+    "goddamn",
+    # extra slang / chat abuse
+    "kill",
+    "kys",
+    "die",
+    "retard",
+    "retarded",
+    "psycho",
+    "lunatic",
+    "bastards",
+    # additional porn-related
+    "xxx",
+    "onlyfans",
+    "camgirl",
+    "webcam",
+    "stripper",
+    "strip",
+    # mild slurs / abusive slang
+    "jerkoff",
+    "wanker",
+    "twat",
+    "bollocks",
+    "bugger",
+]
+
+# ------------------------------------
+# NORMALIZATION
+# ------------------------------------
+
+
+def normalize_text(text):
+
+    text = text.lower()
+
+    text = re.sub(r"[^a-z0-9]", "", text)
+
+    text = re.sub(r"(.)\1+", r"\1", text)
+
+    return text
+
+
+# ------------------------------------
+# RULE DETECTION
+# ------------------------------------
+
+
+def rule_based_detection(text, sensitive_words):
+
+    normalized_input = normalize_text(text)
+
+    matches = []
+
+    for word in sensitive_words:
+
+        if normalize_text(word) in normalized_input:
+            matches.append(word)
+
+    return matches
+
+
+# ------------------------------------
+# OLLAMA DETECTION
+# ------------------------------------
+
+
+def ollama_detection(text):
+
+    prompt = f"""
+You are a content moderation engine.
+
+Analyze the text.
+
+Detect:
+- sexual content
+- profanity
+- abusive language
+- hate speech
+- self-harm
+- violence
+
+Return ONLY JSON.
+
+Example:
+
+{{
+    "sensitive": true,
+    "category": "sexual",
+    "reason": "Contains explicit sexual content",
+    "risk_score": 90
+}}
+
+TEXT:
+{text}
+"""
+
+    response = ollama.chat(
+        model=OLLAMA_MODEL, messages=[{"role": "user", "content": prompt}]
+    )
+
+    return response["message"]["content"]
+
+
+# ------------------------------------
+# UI
+# ------------------------------------
+
+st.title("Sensitive Word Detection + Ollama")
+
+text = st.text_area("Input Text", height=200)
+
+uploaded = st.file_uploader("Upload Sensitive Word CSV", type=["csv"])
+
+if uploaded:
+
+    df = pd.read_csv(uploaded)
+
+    sensitive_words = df.iloc[:, 0].dropna().tolist()
+
+else:
+
+    sensitive_words = DEFAULT_WORDS
+
+if st.button("Scan"):
+
+    # Rule Layer
+    matches = rule_based_detection(text, sensitive_words)
+
+    if matches:
+
+        st.error("Rule-Based Match Found")
+
+        st.write(matches)
+
+        st.metric("Risk Score", "100%")
+
+    else:
+
+        st.info("No direct match. Checking with Ollama...")
+
+        try:
+
+            result = ollama_detection(text)
+
+            st.subheader("Ollama Result")
+
+            st.code(result, language="json")
+
+        except Exception as e:
+
+            st.error(f"Ollama Error: {str(e)}")
+
+
+*/
+
 import streamlit as st
 import re
 import ollama
