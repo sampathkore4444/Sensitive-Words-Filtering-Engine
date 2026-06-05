@@ -1,0 +1,40 @@
+# Sensitive Words Filteration - Default Word List
+# Each line: a single sensitive word
+# Lines starting with # are comments
+
+# Profanity / offensive words
+anal
+ass
+bastard
+bitch
+damn
+fuck
+shit
+cunt
+dick
+piss
+slut
+whore
+
+# Violence
+kill
+murder
+terrorist
+bomb
+
+# Drugs
+cocaine
+heroin
+marijuana
+meth
+opium
+
+# Hate speech
+nazi
+racist
+
+# Harassment
+bully
+harass
+
+# (Extend with your domain-specific words)

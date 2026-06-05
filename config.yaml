@@ -1,0 +1,66 @@
+server:
+  host: "0.0.0.0"
+  port: 8080
+  workers: 1
+
+detection:
+  case_sensitive: false
+  default_base_score: 0.5
+  max_message_length: 10000
+
+  leetspeak:
+    enabled: true
+    max_expansions: 1024
+
+  homoglyph:
+    enabled: true
+    use_unicode_confusables: true
+
+  separator_bypass:
+    enabled: true
+    separator_chars: [" ", "-", ".", "_", "/", "|", "~", "*", "!"]
+
+  repetition:
+    enabled: true
+    collapse_threshold: 2
+
+  fuzzy:
+    enabled: true
+    max_distance: 2
+    min_word_length: 4
+    distance_ratio: 0.25
+    max_checks_per_message: 500
+
+  scoring:
+    tiers:
+      - threshold: 0.3
+        label: "low"
+        action: "log"
+      - threshold: 0.6
+        label: "medium"
+        action: "flag"
+      - threshold: 0.8
+        label: "high"
+        action: "warn"
+      - threshold: 1.0
+        label: "critical"
+        action: "block"
+
+word_list:
+  default_path: "./data/sensitive_words.txt"
+  auto_reload: false
+  max_words: 100000
+  max_word_length: 256
+
+reporting:
+  storage: "memory"
+  retention_days: 90
+  webhook_url: ""
+  stream:
+    enabled: false
+    type: ""
+    url: ""
+
+logging:
+  level: "info"
+  format: "text"
